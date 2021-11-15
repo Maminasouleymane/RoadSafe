@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Footer from "./Footer";
+import Header from "./Header";
 import * as myData from "../data/dummy.json";
 import mapboxgl from "mapbox-gl";
 import ReactMapGL, {
@@ -57,6 +58,7 @@ const MapCurrentState = () => {
   }, []);
   return (
     <div>
+      <Header />
       <h3> this page should contains the map current Statet </h3>
       <button onClick={() => console.log("clicked")}>add marker</button>
       <h3>Map conatiner</h3>
