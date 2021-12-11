@@ -8,7 +8,10 @@ const Header = () => {
         {" "}
         <Link to={"/"}> SafeRoute</Link>{" "}
       </h1>
-      <nav>Narsa </nav>
+      <nav>
+        {" "}
+        <Link to={"/admin-login"}> Narsa</Link>{" "}
+      </nav>
       <nav>Gendarme </nav>
     </div>
   );

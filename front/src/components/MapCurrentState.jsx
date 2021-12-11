@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
-import * as myData from "../data/dummy.json";
+import axios from "axios";
 import mapboxgl from "mapbox-gl";
 import ReactMapGL, {
   Marker,
@@ -47,6 +47,14 @@ const MapCurrentState = () => {
   });
 
   const [selectedDng, setSelectedDng] = useState(null);
+  const [accidentInfo, setAccidentInfo] = useState([]);
+
+  const populateMap = async () => {
+    await axios
+      .get("http://localhost:3004/accidents")
+      .then((response) => setAccidentInfo(response.data));
+  };
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((pos) => {
       setViewport({
@@ -55,7 +63,11 @@ const MapCurrentState = () => {
         longitude: pos.coords.longitude,
       });
     });
+    populateMap();
   }, []);
+
+  console.log(accidentInfo);
+
   return (
     <div>
       <Header />
@@ -69,7 +81,7 @@ const MapCurrentState = () => {
         onViewportChange={(viewport) => setViewport(viewport)}
         mapStyle="mapbox://styles/mamina99/ckv7x2plt908w14p8x8ha0xe6"
       >
-        {myData.danger.map((dng, index) => (
+        {accidentInfo.map((dng, index) => (
           <Marker
             key={index}
             latitude={dng.coordinates[0]}
@@ -82,7 +94,7 @@ const MapCurrentState = () => {
                 setSelectedDng(dng);
               }}
             >
-              <img src={`images/${dng.type}.png`} alt="accident" />
+              <img src={`images/${dng.danger}.png`} alt="accident" />
             </button>
           </Marker>
         ))}
@@ -95,8 +107,14 @@ const MapCurrentState = () => {
             }}
           >
             <div>
-              <h2>{selectedDng.type}</h2>
-              <h2>{selectedDng.nbresVehicule}</h2>
+              <h2>{selectedDng.danger}</h2>
+              <h2>{selectedDng.commentaire}</h2>
+              <h3>{selectedDng.blessure}</h3>
+              <h2>{selectedDng.commentaire}</h2>
+              <img
+                src={`uploads/${selectedDng.images}`}
+                style={{ height: "40px" }}
+              />
             </div>
           </Popup>
         ) : null}
