@@ -24,11 +24,7 @@ export default function DeclareAccident() {
     const accidentDetails = new FormData();
     accidentDetails.append("coordinate", JSON.stringify(coordinate));
     accidentDetails.append("danger", data.danger);
-    // accidentDetails.append("vehiculeType", coordinates.vehiculeType);
-    // accidentDetails.append("blessure", coordinates.blessure);
-    // accidentDetails.append("genre", coordinates.genre);
     accidentDetails.append("commmentaire", data.commentaire);
-    // accidentDetails.append("confirmed", coordinates.confirmed);
     accidentDetails.append("photo", data.photo[0]);
     console.log(accidentDetails);
     axios({
